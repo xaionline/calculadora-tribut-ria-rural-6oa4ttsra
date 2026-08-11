@@ -9,6 +9,7 @@ import SimulacoesSalvas from './pages/SimulacoesSalvas'
 import TabelaIRPF from './pages/TabelaIRPF'
 import ConfigIBSCBS from './pages/ConfigIBSCBS'
 import Relatorios from './pages/Relatorios'
+import SimulacaoCenarios from './pages/SimulacaoCenarios'
 import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/simulacoes-salvas" element={<SimulacoesSalvas />} />
           <Route path="/tabela-irpf" element={<TabelaIRPF />} />
           <Route path="/config-ibscbs" element={<ConfigIBSCBS />} />
+          <Route path="/simulacao-cenarios" element={<SimulacaoCenarios />} />
           <Route path="/relatorios" element={<Relatorios />} />
         </Route>
         <Route path="*" element={<NotFound />} />

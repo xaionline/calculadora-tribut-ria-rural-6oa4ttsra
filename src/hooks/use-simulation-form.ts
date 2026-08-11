@@ -24,8 +24,11 @@ const defaultForm: SimulationFormState = {
   ],
 }
 
-export function useSimulationForm() {
-  const [form, setForm] = useState<SimulationFormState>(defaultForm)
+export function useSimulationForm(initialReceitaBruta?: number) {
+  const [form, setForm] = useState<SimulationFormState>({
+    ...defaultForm,
+    ...(initialReceitaBruta !== undefined ? { receitaBrutaAnual: initialReceitaBruta } : {}),
+  })
 
   const updateField = <K extends keyof SimulationFormState>(
     key: K,

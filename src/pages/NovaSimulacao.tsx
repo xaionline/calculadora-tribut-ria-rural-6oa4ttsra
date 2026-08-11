@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -12,7 +12,11 @@ import { Calculator, Save, AlertTriangle } from 'lucide-react'
 
 export default function NovaSimulacao() {
   const navigate = useNavigate()
-  const { form, updateField, updateRendimento, computed, isDespesaMaior } = useSimulationForm()
+  const location = useLocation()
+  const initialReceita = (location.state as { receitaBrutaAnual?: number } | null)
+    ?.receitaBrutaAnual
+  const { form, updateField, updateRendimento, computed, isDespesaMaior } =
+    useSimulationForm(initialReceita)
 
   const handleCalculate = () => {
     navigate('/resultado-simulacao', { state: form })

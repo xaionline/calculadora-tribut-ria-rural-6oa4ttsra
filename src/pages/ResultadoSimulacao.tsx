@@ -15,7 +15,15 @@ import { DistributionChart } from '@/components/dashboard/DistributionChart'
 import { calculateFormTaxes, formatCurrency, formatPercent } from '@/lib/tax-utils'
 import { findIrpfBracket, calculateIrpf } from '@/lib/irpf-brackets'
 import type { SimulationFormState } from '@/lib/tax-types'
-import { ArrowLeft, FileText, PiggyBank, TrendingDown, Percent, Receipt } from 'lucide-react'
+import {
+  ArrowLeft,
+  FileText,
+  PiggyBank,
+  TrendingDown,
+  Percent,
+  Receipt,
+  GitCompare,
+} from 'lucide-react'
 
 export default function ResultadoSimulacao() {
   const location = useLocation()
@@ -88,10 +96,16 @@ export default function ResultadoSimulacao() {
             Análise tributária para {form.nomeProdutor || 'Produtor'}
           </p>
         </div>
-        <Button variant="outline" onClick={() => navigate('/nova-simulacao')}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Voltar
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => navigate('/nova-simulacao')}>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Voltar
+          </Button>
+          <Button onClick={() => navigate('/simulacao-cenarios')}>
+            <GitCompare className="h-4 w-4 mr-2" />
+            Comparar Cenários
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
