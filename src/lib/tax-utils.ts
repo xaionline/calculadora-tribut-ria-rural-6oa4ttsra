@@ -4,6 +4,8 @@ import type {
   FaixaRendimento,
   ComparativeRow,
   SavedSimulation,
+  SimulationFormState,
+  SimulationFormComputed,
 } from '@/lib/tax-types'
 
 export function calculateTaxes(data: SimulationData): TaxResult {
@@ -90,3 +92,27 @@ export const mockSavedSimulations: SavedSimulation[] = [
     cargaTributaria: 18.54,
   },
 ]
+
+export function calculateFormTaxes(form: SimulationFormState): SimulationFormComputed {
+  const resultadoLiquido = form.receitaBrutaAnual - form.despesaAnual
+  const ivaReduzido = form.ivaPadrao * (1 - form.reducao / 100)
+  const bcIbsCbs = Math.max(0, resultadoLiquido) * (form.presuncaoBC / 100)
+  const totalRendimentos = form.rendimentos.reduce((sum, r) => sum + r.value, 0)
+  const bcIrpfM = totalRendimentos + bcIbsCbs
+  const ibsCbsTax = bcIbsCbs * (ivaReduzido / 100)
+  const irpfTax = Math.max(0, bcIrpfM) * 0.275
+  const totalTributos = ibsCbsTax + irpfTax
+  const cargaTributaria =
+    form.receitaBrutaAnual > 0 ? (totalTributos / form.receitaBrutaAnual) * 100 : 0
+  return {
+    resultadoLiquido,
+    ivaReduzido,
+    bcIbsCbs,
+    totalRendimentos,
+    bcIrpfM,
+    ibsCbsTax,
+    irpfTax,
+    totalTributos,
+    cargaTributaria,
+  }
+}

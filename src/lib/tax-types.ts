@@ -37,3 +37,32 @@ export interface SavedSimulation {
   totalTributos: number
   cargaTributaria: number
 }
+
+export type TipoPessoa = 'PESSOA_FISICA' | 'PESSOA_JURIDICA'
+
+export interface SimulationFormState {
+  nomeProdutor: string
+  cpfCnpj: string
+  tipoPessoa: TipoPessoa
+  atividadeRural: string
+  municipio: string
+  uf: string
+  receitaBrutaAnual: number
+  despesaAnual: number
+  ivaPadrao: number
+  reducao: number
+  presuncaoBC: number
+  rendimentos: { label: string; value: number }[]
+}
+
+export interface SimulationFormComputed {
+  resultadoLiquido: number
+  ivaReduzido: number
+  bcIbsCbs: number
+  totalRendimentos: number
+  bcIrpfM: number
+  ibsCbsTax: number
+  irpfTax: number
+  totalTributos: number
+  cargaTributaria: number
+}
