@@ -1,73 +1,14 @@
-import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { KpiCards } from '@/components/dashboard/KpiCards'
 import { DistributionChart } from '@/components/dashboard/DistributionChart'
 import { CargaLineChart } from '@/components/dashboard/CargaLineChart'
 import { ComparativeTable } from '@/components/dashboard/ComparativeTable'
 import { AlertBanner } from '@/components/dashboard/AlertBanner'
-import { calculateTaxes, mockSimulation } from '@/lib/tax-utils'
-import type { SimulationData } from '@/lib/tax-types'
+import { mockSimulation, mockResult, formatCurrency } from '@/lib/tax-utils'
 
 const Index = () => {
-  const [simulation, setSimulation] = useState<SimulationData | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        await new Promise((r) => setTimeout(r, 300))
-        setSimulation(mockSimulation)
-      } catch {
-        setError('Não foi possível carregar os dados. Tente novamente mais tarde.')
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadData()
-  }, [])
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <p className="text-muted-foreground">Carregando dashboard...</p>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <Card className="max-w-md">
-          <CardHeader>
-            <CardTitle className="text-destructive">Erro</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">{error}</p>
-          </CardContent>
-        </Card>
-      </div>
-    )
-  }
-
-  if (!simulation) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <Card className="max-w-md text-center">
-          <CardHeader>
-            <CardTitle>Nenhuma simulação encontrada</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Crie uma simulação para visualizar os dados do dashboard.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-    )
-  }
-
-  const result = calculateTaxes(simulation)
+  const simulation = mockSimulation
+  const result = mockResult
 
   return (
     <div className="container mx-auto py-6 px-4 space-y-6">
@@ -77,6 +18,12 @@ const Index = () => {
       </div>
       <AlertBanner cargaTributaria={result.cargaTributaria} />
       <KpiCards receitaBruta={simulation.receitaBruta} result={result} />
+      <Card className="bg-muted/40">
+        <CardContent className="py-3 flex items-center justify-between">
+          <span className="text-sm text-muted-foreground">Despesa Anual</span>
+          <span className="text-lg font-semibold">{formatCurrency(simulation.despesas)}</span>
+        </CardContent>
+      </Card>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>

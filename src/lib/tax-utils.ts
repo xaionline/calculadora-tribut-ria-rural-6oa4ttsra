@@ -1,13 +1,19 @@
-import type { SimulationData, TaxResult, FaixaRendimento, ComparativeRow } from '@/lib/tax-types'
+import type {
+  SimulationData,
+  TaxResult,
+  FaixaRendimento,
+  ComparativeRow,
+  SavedSimulation,
+} from '@/lib/tax-types'
 
 export function calculateTaxes(data: SimulationData): TaxResult {
   const base = data.receitaBruta - data.despesas
   const ibsCBS = data.receitaBruta * ((data.aliquotaIBS + data.aliquotaCBS) / 100)
   const funrural = data.receitaBruta * (data.aliquotaFunrural / 100)
-  const adicional = base > 0 ? base * 0.02 : 0
+  const adicional = base > 0 ? base * (data.aliquotaAdicional / 100) : 0
   const irpf = Math.max(0, base) * (data.aliquotaIRPF / 100)
   const totalTributos = ibsCBS + funrural + adicional + irpf
-  const resultadoLiquido = data.receitaBruta - data.despesas - totalTributos
+  const resultadoLiquido = base
   const cargaTributaria = data.receitaBruta > 0 ? (totalTributos / data.receitaBruta) * 100 : 0
   return { ibsCBS, funrural, adicional, irpf, totalTributos, resultadoLiquido, cargaTributaria }
 }
@@ -21,26 +27,66 @@ export function formatPercent(value: number): string {
 }
 
 export const mockSimulation: SimulationData = {
-  receitaBruta: 480000,
-  despesas: 180000,
-  aliquotaIBS: 8.8,
-  aliquotaCBS: 4.4,
+  receitaBruta: 20000000,
+  despesas: 17000000,
+  aliquotaIBS: 6.5,
+  aliquotaCBS: 4.0,
   aliquotaFunrural: 1.2,
-  aliquotaIRPF: 15,
+  aliquotaAdicional: 10.03,
+  aliquotaIRPF: 36.9,
+}
+
+export const mockResult: TaxResult = {
+  ibsCBS: 2100000,
+  funrural: 240000,
+  adicional: 300830,
+  irpf: 1107000,
+  totalTributos: 3747830,
+  resultadoLiquido: 3000000,
+  cargaTributaria: 18.19,
 }
 
 export const faixasRendimento: FaixaRendimento[] = [
-  { faixa: 'Até R$ 120k', carga: 12.5 },
-  { faixa: 'R$ 120k–240k', carga: 15.8 },
-  { faixa: 'R$ 240k–480k', carga: 18.3 },
-  { faixa: 'R$ 480k–960k', carga: 21.7 },
-  { faixa: 'Acima R$ 960k', carga: 24.1 },
+  { faixa: 'R$ 600k', carga: 15.2 },
+  { faixa: 'R$ 700k', carga: 16.1 },
+  { faixa: 'R$ 800k', carga: 16.8 },
+  { faixa: 'R$ 900k', carga: 17.3 },
+  { faixa: 'R$ 1.000k', carga: 17.7 },
+  { faixa: 'R$ 1.100k', carga: 18.0 },
+  { faixa: 'R$ 1.210k', carga: 18.4 },
 ]
 
 export const comparativeRows: ComparativeRow[] = [
-  { item: 'IBS/CBS', regimeAtual: 'R$ 63.360', novoRegime: 'R$ 63.360' },
-  { item: 'Funrural', regimeAtual: 'R$ 5.760', novoRegime: 'R$ 5.760' },
-  { item: 'IRPF', regimeAtual: 'R$ 45.000', novoRegime: 'R$ 45.000' },
-  { item: 'Adicional', regimeAtual: 'R$ 6.000', novoRegime: 'R$ 6.000' },
-  { item: 'Total', regimeAtual: 'R$ 120.120', novoRegime: 'R$ 120.120' },
+  { item: 'IBS/CBS', regimeAtual: 'R$ 2.640.000,00', novoRegime: 'R$ 2.100.000,00' },
+  { item: 'Funrural', regimeAtual: 'R$ 240.000,00', novoRegime: 'R$ 240.000,00' },
+  { item: 'IRPF', regimeAtual: 'R$ 1.107.000,00', novoRegime: 'R$ 1.107.000,00' },
+  { item: 'Adicional Altas Rendas', regimeAtual: '—', novoRegime: 'R$ 300.830,00' },
+  { item: 'Total', regimeAtual: 'R$ 3.987.000,00', novoRegime: 'R$ 3.747.830,00' },
+]
+
+export const mockSavedSimulations: SavedSimulation[] = [
+  {
+    id: '1',
+    nome: 'Fazenda Santa Helena — 2025',
+    data: '15/01/2025',
+    receitaBruta: 20000000,
+    totalTributos: 3747830,
+    cargaTributaria: 18.19,
+  },
+  {
+    id: '2',
+    nome: 'Sítio Boa Vista — 2024',
+    data: '10/12/2024',
+    receitaBruta: 8500000,
+    totalTributos: 1450000,
+    cargaTributaria: 17.06,
+  },
+  {
+    id: '3',
+    nome: 'Fazenda Três Marias — 2024',
+    data: '05/11/2024',
+    receitaBruta: 12300000,
+    totalTributos: 2280000,
+    cargaTributaria: 18.54,
+  },
 ]

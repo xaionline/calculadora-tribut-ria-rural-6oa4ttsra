@@ -10,7 +10,7 @@
 @layer base {
   :root {
     /* Change the colors to match the design system */
-    --background: 0 0% 100%;
+    --background: 0 0% 96%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -19,8 +19,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 84% 4.9%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 152 57% 24%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 98%;
     --secondary-foreground: 222.2 84% 4.9%;
@@ -36,7 +36,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 152 57% 24%;
 
     --radius: 0.5rem;
 
@@ -44,7 +44,7 @@
 
     --sidebar-foreground: 222.2 84% 4.9%;
 
-    --sidebar-primary: 222.2 84% 4.9%;
+    --sidebar-primary: 152 57% 24%;
 
     --sidebar-primary-foreground: 0 0% 100%;
 
@@ -54,7 +54,7 @@
 
     --sidebar-border: 214.3 31.8% 91.4%;
 
-    --sidebar-ring: 222.2 84% 4.9%;
+    --sidebar-ring: 152 57% 24%;
 
     --chart-1: 34 100% 44%;
     --chart-2: 189 100% 38%;
@@ -74,7 +74,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 152 57% 40%;
     --primary-foreground: 222.2 84% 4.9%;
 
     --secondary: 222.2 84% 4.9%;
@@ -94,12 +94,13 @@
     --ring: 214.3 31.8% 91.4%;
     --sidebar-background: 222.2 84% 4.9%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 222.2 84% 4.9%;
+
+    --sidebar-primary: 152 57% 40%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 222.2 84% 4.9%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 222.2 84% 4.9%;
-    --sidebar-ring: 222.2 84% 4.9%;
+    --sidebar-ring: 152 57% 40%;
 
     --chart-1: 270 100% 44%;
     --chart-2: 164 100% 38%;

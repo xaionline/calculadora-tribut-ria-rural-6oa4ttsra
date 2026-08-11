@@ -17,7 +17,7 @@ export function DistributionChart({ result }: DistributionChartProps) {
   const data = [
     { name: 'IBS/CBS', value: result.ibsCBS },
     { name: 'Funrural', value: result.funrural },
-    { name: 'Adicional', value: result.adicional },
+    { name: 'Adicional Altas Rendas', value: result.adicional },
     { name: 'IRPF', value: result.irpf },
   ]
 
@@ -26,7 +26,7 @@ export function DistributionChart({ result }: DistributionChartProps) {
       config={{
         ibs: { label: 'IBS/CBS', color: 'hsl(var(--chart-1))' },
         funrural: { label: 'Funrural', color: 'hsl(var(--chart-2))' },
-        adicional: { label: 'Adicional', color: 'hsl(var(--chart-3))' },
+        adicional: { label: 'Adicional Altas Rendas', color: 'hsl(var(--chart-3))' },
         irpf: { label: 'IRPF', color: 'hsl(var(--chart-4))' },
       }}
       className="h-[300px] w-full"

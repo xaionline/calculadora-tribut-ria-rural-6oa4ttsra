@@ -4,6 +4,7 @@ export interface SimulationData {
   aliquotaIBS: number
   aliquotaCBS: number
   aliquotaFunrural: number
+  aliquotaAdicional: number
   aliquotaIRPF: number
 }
 
@@ -26,4 +27,13 @@ export interface ComparativeRow {
   item: string
   regimeAtual: string
   novoRegime: string
+}
+
+export interface SavedSimulation {
+  id: string
+  nome: string
+  data: string
+  receitaBruta: number
+  totalTributos: number
+  cargaTributaria: number
 }
