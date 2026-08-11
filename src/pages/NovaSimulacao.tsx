@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -7,18 +7,15 @@ import { RevenueCard } from '@/components/simulation/RevenueCard'
 import { IbsCbsCard } from '@/components/simulation/IbsCbsCard'
 import { RendimentosCard } from '@/components/simulation/RendimentosCard'
 import { useSimulationForm } from '@/hooks/use-simulation-form'
-import { formatPercentBR } from '@/lib/formatters'
-import { formatCurrency } from '@/lib/tax-utils'
-import type { SimulationFormComputed } from '@/lib/tax-types'
 import { toast } from 'sonner'
-import { CheckCircle2, Calculator, Save, AlertTriangle } from 'lucide-react'
+import { Calculator, Save, AlertTriangle } from 'lucide-react'
 
 export default function NovaSimulacao() {
+  const navigate = useNavigate()
   const { form, updateField, updateRendimento, computed, isDespesaMaior } = useSimulationForm()
-  const [result, setResult] = useState<SimulationFormComputed | null>(null)
 
   const handleCalculate = () => {
-    setResult(computed)
+    navigate('/resultado-simulacao', { state: form })
     toast.success('Cálculo realizado com sucesso!')
   }
 
@@ -47,19 +44,6 @@ export default function NovaSimulacao() {
     localStorage.setItem('savedSimulations', JSON.stringify(saved))
     toast.success('Simulação salva com sucesso!')
   }
-
-  const resultItems = result
-    ? [
-        { label: 'Resultado Líquido', value: formatCurrency(result.resultadoLiquido) },
-        { label: 'IVA Reduzido', value: formatPercentBR(result.ivaReduzido) },
-        { label: 'BC IBS/CBS', value: formatCurrency(result.bcIbsCbs) },
-        { label: 'Imposto IBS/CBS', value: formatCurrency(result.ibsCbsTax) },
-        { label: 'BC IRPF-M', value: formatCurrency(result.bcIrpfM) },
-        { label: 'Imposto IRPF', value: formatCurrency(result.irpfTax) },
-        { label: 'Total Tributos', value: formatCurrency(result.totalTributos) },
-        { label: 'Carga Tributária', value: formatPercentBR(result.cargaTributaria) },
-      ]
-    : []
 
   return (
     <div className="container mx-auto py-6 px-4 space-y-6">
@@ -101,27 +85,6 @@ export default function NovaSimulacao() {
           Salvar Simulação
         </Button>
       </div>
-
-      {result && (
-        <Card className="animate-fade-in-up">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5 text-green-600" />
-              Resultado da Simulação
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {resultItems.map((item) => (
-                <div key={item.label} className="space-y-1">
-                  <p className="text-sm text-muted-foreground">{item.label}</p>
-                  <p className="text-lg font-bold">{item.value}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   )
 }

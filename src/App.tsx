@@ -4,6 +4,7 @@ import { Toaster as Sonner } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import Index from './pages/Index'
 import NovaSimulacao from './pages/NovaSimulacao'
+import ResultadoSimulacao from './pages/ResultadoSimulacao'
 import SimulacoesSalvas from './pages/SimulacoesSalvas'
 import TabelaIRPF from './pages/TabelaIRPF'
 import ConfigIBSCBS from './pages/ConfigIBSCBS'
@@ -20,6 +21,7 @@ const App = () => (
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
           <Route path="/nova-simulacao" element={<NovaSimulacao />} />
+          <Route path="/resultado-simulacao" element={<ResultadoSimulacao />} />
           <Route path="/simulacoes-salvas" element={<SimulacoesSalvas />} />
           <Route path="/tabela-irpf" element={<TabelaIRPF />} />
           <Route path="/config-ibscbs" element={<ConfigIBSCBS />} />
