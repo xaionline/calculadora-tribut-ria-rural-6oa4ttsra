@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-11T19:31:09.770Z",
+  "generatedAt": "2026-08-12T10:57:43.383Z",
   "collections": [
     {
       "name": "users",
@@ -211,7 +211,11 @@
           "autodateTriggers": ["onCreate", "onUpdate"]
         }
       ],
-      "indexes": []
+      "indexes": [
+        "CREATE INDEX `idx_simulacoes_status` ON `simulacoes` (status)",
+        "CREATE INDEX `idx_simulacoes_created` ON `simulacoes` (created)",
+        "CREATE INDEX `idx_simulacoes_produtor_id` ON `simulacoes` (produtor_id)"
+      ]
     },
     {
       "name": "rendimentos_simulacao",
