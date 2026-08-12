@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T10:57:43.383Z",
+  "generatedAt": "2026-08-12T18:34:50.594Z",
   "collections": [
     {
       "name": "users",
@@ -214,7 +214,8 @@
       "indexes": [
         "CREATE INDEX `idx_simulacoes_status` ON `simulacoes` (status)",
         "CREATE INDEX `idx_simulacoes_created` ON `simulacoes` (created)",
-        "CREATE INDEX `idx_simulacoes_produtor_id` ON `simulacoes` (produtor_id)"
+        "CREATE INDEX `idx_simulacoes_produtor_id` ON `simulacoes` (produtor_id)",
+        "CREATE INDEX `idx_simulacoes_ano_base` ON `simulacoes` (ano_base)"
       ]
     },
     {
@@ -315,6 +316,64 @@
         },
         {
           "name": "parcela_deduzir",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "parametros_configuracao",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != \"\"",
+        "view": "@request.auth.id != \"\"",
+        "create": "@request.auth.role = \"CONSULTOR\"",
+        "update": "@request.auth.role = \"CONSULTOR\"",
+        "delete": "@request.auth.role = \"CONSULTOR\""
+      },
+      "fields": [
+        {
+          "name": "iva_padrao",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "reducao_percentual",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "presuncao_percentual",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "aliquota_funrural",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "aliquota_adicional",
           "type": "number",
           "required": false,
           "system": false

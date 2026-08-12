@@ -13,7 +13,9 @@ import {
   Menu,
   Plus,
   Sprout,
+  LogOut,
 } from 'lucide-react'
+import { useAuth } from '@/hooks/use-auth'
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -62,6 +64,7 @@ function SidebarHeader() {
 
 export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { user, signOut } = useAuth()
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -98,13 +101,21 @@ export default function Layout() {
               Calculadora Tributária Rural
             </span>
           </div>
-          <Button asChild size="sm" className="shrink-0">
-            <Link to="/nova-simulacao">
-              <Plus className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Nova Simulação</span>
-              <span className="sm:hidden">Nova</span>
-            </Link>
-          </Button>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="hidden sm:inline text-sm text-muted-foreground truncate max-w-[150px]">
+              {user?.name || user?.email || ''}
+            </span>
+            <Button asChild size="sm">
+              <Link to="/nova-simulacao">
+                <Plus className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Nova Simulação</span>
+                <span className="sm:hidden">Nova</span>
+              </Link>
+            </Button>
+            <Button variant="ghost" size="icon" onClick={signOut} title="Sair">
+              <LogOut className="h-5 w-5" />
+            </Button>
+          </div>
         </header>
 
         <main className="flex-1 overflow-y-auto">

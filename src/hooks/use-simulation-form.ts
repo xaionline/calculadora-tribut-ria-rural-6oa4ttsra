@@ -47,5 +47,15 @@ export function useSimulationForm(initialReceitaBruta?: number) {
   const computed = useMemo(() => calculateFormTaxes(form), [form])
   const isDespesaMaior = form.despesaAnual > form.receitaBrutaAnual
 
-  return { form, updateField, updateRendimento, computed, isDespesaMaior }
+  const errors = useMemo(() => {
+    const e: Record<string, string> = {}
+    if (!form.nomeProdutor.trim()) e.nomeProdutor = 'Nome do produtor é obrigatório'
+    if (!form.cpfCnpj.trim()) e.cpfCnpj = 'CPF/CNPJ é obrigatório'
+    if (form.receitaBrutaAnual <= 0) e.receitaBrutaAnual = 'Receita deve ser maior que zero'
+    return e
+  }, [form])
+
+  const isValid = Object.keys(errors).length === 0
+
+  return { form, updateField, updateRendimento, computed, isDespesaMaior, errors, isValid }
 }
